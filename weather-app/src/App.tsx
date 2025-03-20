@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "./context/theme-provider";
 import Layout from "./components/layout";
-import WeatherDashboard from "./pages/weather-dashboard";
 import CityPage from "./pages/city-page";
+import { WeatherDashboard } from "./pages/weather-dashboard";
 
 const queryClient = new QueryClient({
   defaultOptions: {
