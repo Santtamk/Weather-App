@@ -112,10 +112,10 @@ export function WeatherDashboard() {
       <div>
         {/* Current and Hourly */}
         <div>
-          <CurrentWeather
-            data={weatherQuery.data}
+          {/* <CurrentWeather
+            data= {weatherQuery.data}
             locationName={locationName}
-          />
+          /> */}
         </div>
         {/* details and forecast */}
         <div></div>
