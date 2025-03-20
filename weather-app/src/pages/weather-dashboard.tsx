@@ -1,3 +1,4 @@
+import CurrentWeather from "@/components/current-weather";
 import WeatherSkeleton from "@/components/loading-skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -21,10 +22,7 @@ export function WeatherDashboard() {
   const forecastQuery = useForecastQuery(coordinates);
   const locationQuery = useReverseGeocodeQuery(coordinates);
 
-  console.log("locationQuery", locationQuery);
-  console.log("forecastQuery", forecastQuery);
-  console.log("weatherQuery", weatherQuery);
-  console.log("coordinates", coordinates);
+  // console.log("weatherQuery:", weatherQuery);
 
   const handleRefresh = () => {
     getLocation();
@@ -35,11 +33,6 @@ export function WeatherDashboard() {
       locationQuery.refetch();
     }
   };
-
-  if (locationLoading) {
-    // Use to show a placeholder while content is loading.
-    return <WeatherSkeleton />;
-  }
 
   if (locationError) {
     // Alert: Displays a callout for user attention.
@@ -92,6 +85,12 @@ export function WeatherDashboard() {
       </Alert>
     );
   }
+
+  if (locationLoading) {
+    // Use to show a placeholder while content is loading.
+    return <WeatherSkeleton />;
+  }
+
   return (
     <div>
       {/* Favorite Cities */}
@@ -110,7 +109,17 @@ export function WeatherDashboard() {
           />
         </Button>
       </div>
-      {/* Current and Hourly */}
+      <div>
+        {/* Current and Hourly */}
+        <div>
+          <CurrentWeather
+            data={weatherQuery.data}
+            locationName={locationName}
+          />
+        </div>
+        {/* details and forecast */}
+        <div></div>
+      </div>
     </div>
   );
 }
