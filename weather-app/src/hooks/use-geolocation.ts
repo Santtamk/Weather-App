@@ -1,10 +1,10 @@
-import { Coordinates } from "@/api/types";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import type { Coordinates } from "@/api/types";
 
 interface GeolocationState {
-  isLoading: boolean;
-  error: string | null;
   coordinates: Coordinates | null;
+  error: string | null;
+  isLoading: boolean;
 }
 
 export function useGeolocation() {
@@ -17,8 +17,6 @@ export function useGeolocation() {
   const getLocation = () => {
     setLocationData((prev) => ({ ...prev, isLoading: true, error: null }));
 
-    //The Geolocation API is accessed via a call to navigator.geolocation. This will cause the browser to ask the user for permission to access their location data. If the user accept, the browser will search for the best available functionality on the device to access this information (for example GPS).
-
     if (!navigator.geolocation) {
       setLocationData({
         coordinates: null,
@@ -27,7 +25,7 @@ export function useGeolocation() {
       });
       return;
     }
-    // The getCurrentPosition() method is used to return the user's current location.
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocationData({
@@ -56,6 +54,7 @@ export function useGeolocation() {
           default:
             errorMessage = "An unknown error occurred.";
         }
+
         setLocationData({
           coordinates: null,
           error: errorMessage,
@@ -70,12 +69,13 @@ export function useGeolocation() {
     );
   };
 
+  // Get location on component mount
   useEffect(() => {
     getLocation();
   }, []);
 
   return {
     ...locationData,
-    getLocation,
+    getLocation, // Expose method to manually refresh location
   };
 }
