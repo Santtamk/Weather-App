@@ -3,6 +3,8 @@ import HourlyTemperature from "@/components/hourly-temperature";
 import WeatherSkeleton from "@/components/loading-skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import WeatherDetails from "@/components/weather-details";
+import WeatherForecast from "@/components/weather-forecast";
 import { useGeolocation } from "@/hooks/use-geolocation";
 import {
   useForecastQuery,
@@ -10,7 +12,6 @@ import {
   useWeatherQuery,
 } from "@/hooks/use-weather";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react";
-import { useEffect } from "react";
 
 export function WeatherDashboard() {
   const {
@@ -20,12 +21,11 @@ export function WeatherDashboard() {
     getLocation,
   } = useGeolocation();
 
-  const weatherQuery = useWeatherQuery(coordinates);
-
+  // const weatherQuery = useWeatherQuery(coordinates);
   const forecastQuery = useForecastQuery(coordinates);
   const locationQuery = useReverseGeocodeQuery(coordinates);
 
-  // console.log("weatherQuery:", weatherQuery);
+  const weatherQuery = useWeatherQuery(coordinates);
 
   const handleRefresh = () => {
     getLocation();
@@ -36,15 +36,6 @@ export function WeatherDashboard() {
       locationQuery.refetch();
     }
   };
-  // useEffect(() => {
-  //   console.log("Coordinates updated:", coordinates);
-  // }, [coordinates]); //logs twice second one has output
-
-  // useEffect(() => {
-  //   if (weatherQuery.data) {
-  //     console.log("weatherQuery updated:", weatherQuery.data);
-  //   }
-  // }, [weatherQuery.data]);//logs once has output
 
   if (locationError) {
     // Alert: Displays a callout for user attention.
@@ -131,7 +122,11 @@ export function WeatherDashboard() {
           <HourlyTemperature data={forecastQuery.data} />
         </div>
         {/* details and forecast */}
-        <div></div>
+
+        <div className="grid gap-6 md:grid-cols-2 items-start">
+          <WeatherDetails data={weatherQuery.data} />
+          <WeatherForecast data={forecastQuery.data} />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { ForecastData } from "@/api/types";
+import type { ForecastData } from "@/api/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   LineChart,
