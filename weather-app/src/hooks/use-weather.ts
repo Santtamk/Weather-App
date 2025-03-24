@@ -41,3 +41,4 @@ export function useLocationSearch(query: string) {
     enabled: query.length >= 3,
   });
 }
+
