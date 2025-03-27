@@ -89,7 +89,7 @@ export function WeatherDashboard() {
     );
   }
 
-  if (locationLoading) {
+  if (!weatherQuery.data || !forecastQuery.data) {
     // Use to show a placeholder while content is loading.
     return <WeatherSkeleton />;
   }
