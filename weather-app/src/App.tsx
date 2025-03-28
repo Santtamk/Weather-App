@@ -6,6 +6,7 @@ import { ThemeProvider } from "./context/theme-provider";
 import Layout from "./components/layout";
 import CityPage from "./pages/city-page";
 import { WeatherDashboard } from "./pages/weather-dashboard";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +30,7 @@ function App() {
               <Route path="/city/:cityName" element={<CityPage />} />
             </Routes>
           </Layout>
+          <Toaster />
         </ThemeProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

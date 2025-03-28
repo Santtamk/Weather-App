@@ -16,14 +16,15 @@ import {
 import { Button } from "@/components/ui/button";
 // import { useFavorites } from "@/hooks/use-favorite";
 import { useSearchHistory } from "@/hooks/use-search-History";
+import { useFavorite } from "@/hooks/use-favorite";
 
-export function CitySearch() {
+export default function CitySearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   const { data: locations, isLoading } = useLocationSearch(query);
-  // const { favorites } = useFavorites();
+  const { favorites } = useFavorite();
   const { history, clearHistory, addToHistory } = useSearchHistory();
 
   const handleSelect = (cityData: string) => {

@@ -1,6 +1,7 @@
 import type { ForecastData } from "@/api/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { ArrowDown, ArrowUp, Droplet, Droplets } from "lucide-react";
+import { ArrowDown, ArrowUp, Droplets } from "lucide-react";
+import { format } from "date-fns";
 
 interface WeatherForecastProps {
   data: ForecastData;
@@ -22,9 +23,9 @@ interface DailyForecast {
 
 const WeatherForecast = ({ data }: WeatherForecastProps) => {
   const dailyForecasts = data.list.reduce((acc, forecast) => {
-    const data = format(new Date(forecast.dt * 1000), "yyyy-MM-dd");
+    const date = format(new Date(forecast.dt * 1000), "yyyy-MM-dd");
 
-    if (!acc[data]) {
+    if (!acc[date]) {
       acc[date] = {
         temp_min: forecast.main.temp_min,
         temp_max: forecast.main.temp_max,

@@ -13,7 +13,7 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
     main: { temp, feels_like, temp_min, temp_max, humidity },
     wind: { speed },
   } = data;
-  console.log("data", data);
+  // console.log("data", data);
 
   const formatTemp = (temp: number) => `${Math.round(temp)}°`;
 
@@ -77,7 +77,7 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
             <div>
               <div className="relative flex aspect-square w-full max-w-[200px] items-center justify-center">
                 <img
-                  src={`https://openweathermap.ord/img/wn/${currentWeather.icon}@4x.png`}
+                  src={`https://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
                   alt="current_weather_logo"
                 />
               </div>

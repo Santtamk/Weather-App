@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocalStorage } from "./use-local-storeage";
 
 interface SearchHistoryItem {
@@ -14,11 +14,10 @@ interface SearchHistoryItem {
 
 export function useSearchHistory() {
   const [history, setHistory] = useLocalStorage<SearchHistoryItem[]>(
-    "Search-history",
+    "search-history",
     []
   );
-
-  const QueryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const historyQuery = useQuery({
     queryKey: ["search-history"],
@@ -32,22 +31,21 @@ export function useSearchHistory() {
     ) => {
       const newSearch: SearchHistoryItem = {
         ...search,
-        id: `${search.lat} - ${search.lon}-${Date.now()}`,
+        id: `${search.lat}-${search.lon}-${Date.now()}`,
         searchedAt: Date.now(),
       };
 
+      // Remove duplicates and keep only last 10 searches
       const filteredHistory = history.filter(
         (item) => !(item.lat === search.lat && item.lon === search.lon)
       );
-
       const newHistory = [newSearch, ...filteredHistory].slice(0, 10);
 
       setHistory(newHistory);
       return newHistory;
     },
-
-    onSuccess: () => {
-      QueryClient.setQueriesData(["search-history"], newHistory);
+    onSuccess: (newHistory) => {
+      queryClient.setQueryData(["search-history"], newHistory);
     },
   });
 
@@ -56,8 +54,8 @@ export function useSearchHistory() {
       setHistory([]);
       return [];
     },
-    onSuccess: (newHistory) => {
-      QueryClient.setQueryData(["search-history"], []);
+    onSuccess: () => {
+      queryClient.setQueryData(["search-history"], []);
     },
   });
 

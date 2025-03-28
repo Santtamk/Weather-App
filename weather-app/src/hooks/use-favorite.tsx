@@ -1,9 +1,4 @@
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocalStorage } from "./use-local-storeage";
 
 interface FavoriteCity {
@@ -35,7 +30,7 @@ export function useFavorite() {
     mutationFn: async (city: Omit<FavoriteCity, "id" | "addedAt">) => {
       const newFavorite: FavoriteCity = {
         ...city,
-        id: `${city.lat} - ${city.lon}-${Date.now()}`,
+        id: `${city.lat} - ${city.lon}`,
         addedAt: Date.now(),
       };
 
@@ -71,6 +66,7 @@ export function useFavorite() {
     addFavorite,
     favoriteQuery,
     removeFavorite,
-    isFavorite:(lat)
+    isFavorite: (lat: number, lon: number) =>
+      favorites.some((city) => city.lat === lat && city.lon === lon),
   };
 }
